@@ -1,0 +1,6 @@
+@CustomerFeedback_HostAddress = http://localhost:5157
+
+GET {{CustomerFeedback_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

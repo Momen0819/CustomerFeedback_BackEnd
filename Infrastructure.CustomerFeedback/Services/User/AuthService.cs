@@ -24,7 +24,7 @@ namespace Infrastructure.CustomerFeedback.Services.User
 
         public async Task<ServiceResponse<LoginResponseDto>> LoginAsync(LoginRequestDto dto)
         {
-            var user = await _userManager.FindByNameAsync(dto.Username);
+            ApplicationUser user = await _userManager.FindByNameAsync(dto.Username);
 
             if (user == null || !user.Is_Active || user.Is_Deleted)
             {
@@ -36,7 +36,7 @@ namespace Infrastructure.CustomerFeedback.Services.User
                 );
             }
 
-            var passwordValid = await _userManager.CheckPasswordAsync(user, dto.Password);
+            bool passwordValid = await _userManager.CheckPasswordAsync(user, dto.Password);
             if (!passwordValid)
             {
                 return new ServiceResponse<LoginResponseDto>(
@@ -47,7 +47,7 @@ namespace Infrastructure.CustomerFeedback.Services.User
                 );
             }
 
-            var token = GenerateJwtToken(user);
+            string token = GenerateJwtToken(user);
 
             return new ServiceResponse<LoginResponseDto>(
                 (int)HttpStatusCodeEnum.OK,
@@ -63,16 +63,16 @@ namespace Infrastructure.CustomerFeedback.Services.User
 
         private string GenerateJwtToken(ApplicationUser user)
         {
-            var claims = new[]
+            Claim[] claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,

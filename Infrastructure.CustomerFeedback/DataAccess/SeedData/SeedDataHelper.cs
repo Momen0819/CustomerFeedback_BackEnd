@@ -14,14 +14,14 @@ namespace Infrastructure.CustomerFeedback.DataAccess.SeedData
     {
         public static void Seed(IServiceProvider serviceProvider)
         {
-            using var scope = serviceProvider.CreateScope();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            using IServiceScope scope = serviceProvider.CreateScope();
+            UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            var admin = userManager.FindByNameAsync("admin").Result;
+            ApplicationUser admin = userManager.FindByNameAsync("admin").Result;
 
             if (admin == null)
             {
-                var newAdmin = new ApplicationUser
+                ApplicationUser newAdmin = new ApplicationUser
                 {
                     UserName = "admin",
                     Email = "admin@example.com",

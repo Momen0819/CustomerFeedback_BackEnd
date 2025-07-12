@@ -23,7 +23,7 @@ namespace CustomerFeedback.Extensions
             // Localization
             services.AddLocalization(options => options.ResourcesPath = "Shared/Resources");
 
-            var supportedCultures = new[] { "en", "ar" };
+            string[] supportedCultures = new[] { "en", "ar" };
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.DefaultRequestCulture = new RequestCulture("en");
@@ -55,7 +55,7 @@ namespace CustomerFeedback.Extensions
             {
                 options.AddPolicy("AllowedHostsPolicy", policy =>
                 {
-                    var allowedHosts = configuration.GetSection("AllowedHosts").Get<string[]>();
+                    string[] allowedHosts = configuration.GetSection("AllowedHosts").Get<string[]>();
                     policy.WithOrigins(allowedHosts)
                           .AllowAnyHeader()
                           .AllowAnyMethod();

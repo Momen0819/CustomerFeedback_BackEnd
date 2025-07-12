@@ -24,19 +24,19 @@ namespace Infrastructure.CustomerFeedback.Services
 
         public async Task<ServiceResponse<List<FeedbackTypeDto>>> GetAllAsync()
         {
-            var entities = await _repository.GetAllAsync();
+            IEnumerable<FeedbackType> entities = await _repository.GetAllAsync();
             entities.ToDto(out List<FeedbackTypeDto> dtoList);
             return new ServiceResponse<List<FeedbackTypeDto>>(200, MessageResources.Success, dtoList);
         }
 
-        public async Task<ServiceResponse<FeedbackTypeDetailDto>> GetByIdAsync(Guid id)
+        public async Task<ServiceResponse<FeedbackTypeDto>> GetByIdAsync(Guid id)
         {
-            var entity = await _repository.GetByIdAsync(id);
+            FeedbackType entity = await _repository.GetByIdAsync(id);
             if (entity == null)
-                return new ServiceResponse<FeedbackTypeDetailDto>(404, MessageResources.FeedbackTypeNotFound, null, false);
+                return new ServiceResponse<FeedbackTypeDto>(404, MessageResources.FeedbackTypeNotFound, null, false);
 
-            entity.ToDto(out FeedbackTypeDetailDto dto);
-            return new ServiceResponse<FeedbackTypeDetailDto>(200, MessageResources.Success, dto);
+            entity.ToDto(out FeedbackTypeDto dto);
+            return new ServiceResponse<FeedbackTypeDto>(200, MessageResources.Success, dto);
         }
 
         public async Task<ServiceResponse<Guid>> CreateAsync(CreateFeedbackTypeDto dto, Guid Created_By)
@@ -51,9 +51,9 @@ namespace Infrastructure.CustomerFeedback.Services
             return new ServiceResponse<Guid>(200, MessageResources.FeedbackTypeCreated, entity.Id);
         }
 
-        public async Task<ServiceResponse<bool>> EditAsync(EditFeedbackTypeDto dto, Guid modifiedBy)
+        public async Task<ServiceResponse<bool>> EditAsync(Guid id, CreateFeedbackTypeDto dto, Guid modifiedBy)
         {
-            var entity = await _repository.GetByIdAsync(dto.Id);
+            FeedbackType entity = await _repository.GetByIdAsync(id);
             if (entity == null)
                 return new ServiceResponse<bool>(404, MessageResources.FeedbackTypeNotFound, false, false);
 
@@ -75,7 +75,7 @@ namespace Infrastructure.CustomerFeedback.Services
 
         public async Task<ServiceResponse<bool>> DeleteAsync(Guid id, Guid deletedBy)
         {
-            var entity = await _repository.GetByIdAsync(id);
+            FeedbackType entity = await _repository.GetByIdAsync(id);
             if (entity == null)
                 return new ServiceResponse<bool>(404, MessageResources.FeedbackTypeNotFound, false, false);
 

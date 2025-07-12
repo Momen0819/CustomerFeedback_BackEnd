@@ -42,15 +42,14 @@ namespace Application.CustomerFeedback.Mapping
             dto = new FeedbackTypeDetailDto
             {
                 Id = entity.Id,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate,
                 DescriptionAr = entity.DescriptionAr,
                 DescriptionEn = entity.DescriptionEn,
                 NameAr = entity.NameAr,
-                NameEn = entity.NameEn,
-                StartDate = entity.StartDate,
-                EndDate = entity.EndDate
+                NameEn = entity.NameEn
             };
         }
-
         public static void ToDto(this IEnumerable<FeedbackType> entities, out List<FeedbackTypeDto> dtoList)
         {
             dtoList = new List<FeedbackTypeDto>();

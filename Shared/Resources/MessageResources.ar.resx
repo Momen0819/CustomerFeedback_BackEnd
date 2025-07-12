@@ -144,4 +144,13 @@
   <data name="Success" xml:space="preserve">
     <value>نجاح</value>
   </data>
+  <data name="FeedbackCreated" xml:space="preserve">
+    <value>تم الحفظ بنجاح</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>البريد الإلكتروني موجود بالفعل</value>
+  </data>
+  <data name="FeedbackTypeNotAvaliableThisTime" xml:space="preserve">
+    <value>التعليقات غير متاحة هذه المرة</value>
+  </data>
 </root>

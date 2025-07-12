@@ -23,10 +23,11 @@ namespace CustomerFeedback.Extensions
             // Localization
             services.AddLocalization(options => options.ResourcesPath = "Shared/Resources");
 
-            var supportedCultures = new[] { "en-us", "ar-sa" };
+            var supportedCultures = new[] { "en", "ar" };
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.DefaultRequestCulture = new RequestCulture("en-us");
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
                 options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
                 options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
             });
@@ -42,10 +43,12 @@ namespace CustomerFeedback.Extensions
 
             // DI for repositories
             services.AddScoped<IFeedbackTypeRepository, FeedbackTypeRepository>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
             // DI for services 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IFeedbackTypeService, FeedbackTypeService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
 
             // CORS
             services.AddCors(options =>

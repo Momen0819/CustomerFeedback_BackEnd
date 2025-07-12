@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Application.CustomerFeedback.DTOs
 {
-    public class FeedbackTypeDto
+    public class FeedbackStatisticsDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public Guid FeedbackTypeId { get; set; }
+        public string NameAr { get; set; }
+        public string NameEn { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int TotalFeedbacks { get; set; }
+        public double AverageRating { get; set; }
     }
 }

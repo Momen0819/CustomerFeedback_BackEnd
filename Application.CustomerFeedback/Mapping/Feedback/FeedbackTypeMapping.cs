@@ -31,8 +31,23 @@ namespace Application.CustomerFeedback.Mapping
             dto = new FeedbackTypeDto
             {
                 Id = entity.Id,
+                Name = Shared.CultureHelper.GetCurrentLanguage() == "ar" ? entity.NameAr : entity.NameEn,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate
+            };
+        }
+
+        public static void ToDto(this FeedbackType entity, out FeedbackTypeDetailDto dto)
+        {
+            dto = new FeedbackTypeDetailDto
+            {
+                Id = entity.Id,
+                DescriptionAr = entity.DescriptionAr,
+                DescriptionEn = entity.DescriptionEn,
+                NameAr = entity.NameAr,
                 NameEn = entity.NameEn,
-                NameAr = entity.NameAr
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate
             };
         }
 
@@ -41,7 +56,7 @@ namespace Application.CustomerFeedback.Mapping
             dtoList = new List<FeedbackTypeDto>();
             foreach (var entity in entities)
             {
-                entity.ToDto(out var dto);
+                entity.ToDto(out FeedbackTypeDto dto);
                 dtoList.Add(dto);
             }
         }

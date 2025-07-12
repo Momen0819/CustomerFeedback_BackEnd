@@ -144,4 +144,13 @@
   <data name="Success" xml:space="preserve">
     <value>Success</value>
   </data>
+  <data name="FeedbackCreated" xml:space="preserve">
+    <value>FeedbackCreated</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>EmailAlreadyExists</value>
+  </data>
+  <data name="FeedbackTypeNotAvaliableThisTime" xml:space="preserve">
+    <value>FeedbackTypeNotAvaliableThisTime</value>
+  </data>
 </root>

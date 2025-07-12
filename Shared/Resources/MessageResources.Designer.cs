@@ -70,11 +70,38 @@ namespace Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EmailAlreadyExists.
+        /// </summary>
+        public static string EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FeedbackCreated.
+        /// </summary>
+        public static string FeedbackCreated {
+            get {
+                return ResourceManager.GetString("FeedbackCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feedback type created successfully.
         /// </summary>
         public static string FeedbackTypeCreated {
             get {
                 return ResourceManager.GetString("FeedbackTypeCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FeedbackTypeNotAvaliableThisTime.
+        /// </summary>
+        public static string FeedbackTypeNotAvaliableThisTime {
+            get {
+                return ResourceManager.GetString("FeedbackTypeNotAvaliableThisTime", resourceCulture);
             }
         }
         

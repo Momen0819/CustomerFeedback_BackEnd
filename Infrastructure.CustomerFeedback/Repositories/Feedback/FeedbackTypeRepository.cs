@@ -21,7 +21,7 @@ namespace Infrastructure.CustomerFeedback.Repositories
 
         public async Task<IEnumerable<FeedbackType>> GetAllAsync()
         {
-            return await _context.FeedbackTypes.ToListAsync();
+            return await _context.FeedbackTypes.AsNoTracking().Where(s => s.Is_Deleted == false).ToListAsync();
         }
 
         public async Task<FeedbackType?> GetByIdAsync(Guid id)

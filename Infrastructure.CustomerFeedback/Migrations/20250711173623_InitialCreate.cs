@@ -249,6 +249,40 @@ namespace Infrastructure.CustomerFeedback.Migrations
                 name: "IX_Feedbacks_FeedbackTypeId",
                 table: "Feedbacks",
                 column: "FeedbackTypeId");
+
+            migrationBuilder.Sql(
+                @"
+                CREATE OR ALTER PROCEDURE [dbo].[sp_GetFeedbackStatistics]
+                AS
+                BEGIN
+                    DECLARE @Now DATETIME = GETUTCDATE();
+
+                    SELECT
+                        FT.Id AS FeedbackTypeId,
+                        FT.NameAr,
+                        FT.NameEn,
+                        FT.StartDate,
+                        FT.EndDate,
+                        COUNT(F.Id) AS TotalFeedbacks,
+                        ISNULL(AVG(CAST(F.Stars AS FLOAT)), 0) AS AverageRating
+                    FROM FeedbackTypes FT
+                    LEFT JOIN Feedbacks F ON F.FeedbackTypeId = FT.Id AND F.Is_Deleted = 0
+                    WHERE FT.Is_Deleted = 0
+                      AND FT.StartDate <= @Now 
+                    GROUP BY FT.Id, FT.NameAr, FT.NameEn, FT.StartDate, FT.EndDate;
+
+                    SELECT
+                        F.FeedbackTypeId,
+                        F.FullName,
+                        F.Stars,
+                        F.Comment,
+                        F.CreatedDate
+                    FROM Feedbacks F
+                    WHERE F.Is_Deleted = 0
+                    ORDER BY F.CreatedDate DESC;
+                END
+                ");
+
         }
 
         /// <inheritdoc />
@@ -280,6 +314,8 @@ namespace Infrastructure.CustomerFeedback.Migrations
 
             migrationBuilder.DropTable(
                 name: "FeedbackTypes");
+
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS [dbo].[sp_GetFeedbackStatistics];");
         }
     }
 }
